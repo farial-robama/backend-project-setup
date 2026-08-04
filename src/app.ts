@@ -3,8 +3,9 @@ import notFound from './middleware/notFound.js';
 import globalError from './middleware/globalError.js';
 import router from './routes/routes.js';
 
-
 const app: Application = express();
+
+app.use(express.json());
 
 // base route
 app.use('/api/v1', router);
@@ -18,6 +19,7 @@ app.get('/', (_req: Request, res: Response) => {
   });
 });
 
+// middlewares
 app.use(notFound);
 app.use(globalError);
 
