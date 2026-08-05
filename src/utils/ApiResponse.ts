@@ -1,0 +1,57 @@
+import { Response } from 'express';
+import status from 'http-status';
+
+interface PaginationOptions {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
+
+class ApiResponse {
+  static success<T>(
+    res: Response,
+    data: T,
+    message: string = 'Success',
+    stautsCode: number = status.OK,
+  ) {
+    return res.status(stautsCode).json({
+      success: true,
+      message,
+      data,
+    });
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static error(res: Response, error: any) {
+    const statusCode = error.statusCode || 500;
+    const message = error.message || 'Something went wrong';
+
+    const response: { success: boolean; message: string; stack?: string } = {
+      success: false,
+      message,
+    };
+
+    if (process.env.NODE_ENV === 'development') {
+      response.stack = error.stack || '';
+    }
+
+    return res.status(statusCode).json(response);
+  }
+
+  static paginated<T>(
+    res: Response,
+    data: T,
+    pagination: PaginationOptions,
+    message: string = 'Success',
+  ) {
+    return res.status(status.OK).json({
+      success: true,
+      message,
+      pagination,
+      data,
+    });
+  }
+}
+
+export default ApiResponse;

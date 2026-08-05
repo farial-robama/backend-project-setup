@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import { authService } from './auth.service.js';
+import catchAsync from '../../utils/catchAsync.js';
 
-const login = async (req: Request, res: Response) => {
+const login = catchAsync(async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
@@ -18,7 +19,7 @@ const login = async (req: Request, res: Response) => {
       message: error.message,
     });
   }
-};
+});
 
 export const authController = {
   login,
