@@ -29,11 +29,10 @@ const bootstrap = async () => {
       console.log(`server is running on http://localhost:${port}`);
     });
 
-    // graceful shutdown signals
+   
     process.on('SIGTERM', gracefulShutdown('SIGTERM'));
     process.on('SIGINT', gracefulShutdown('SIGINT'));
 
-    // unexpected errors
     process.on(
       'uncaughtException',
       gracefulShutdown('Uncaught Exception', 1),

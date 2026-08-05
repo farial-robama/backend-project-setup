@@ -22,7 +22,6 @@ class ApiResponse {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static error(res: Response, error: any) {
     const statusCode = error.statusCode || 500;
     const message = error.message || 'Something went wrong';
